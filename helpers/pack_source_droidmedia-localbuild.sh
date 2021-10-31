@@ -24,8 +24,12 @@ cp ./external/droidmedia/*.h $fold/external/droidmedia/
 cp ./external/droidmedia/hybris.c $fold/external/droidmedia/
 cp ./out/target/product/${OUT_DEVICE}/system/${DROIDLIB}/libdroidmedia.so $fold/out/target/product/${OUT_DEVICE}/system/${DROIDLIB}/
 cp ./out/target/product/${OUT_DEVICE}/system/${DROIDLIB}/libminisf.so $fold/out/target/product/${OUT_DEVICE}/system/${DROIDLIB}/
-cp ./out/target/product/${OUT_DEVICE}/system/bin/minimediaservice $fold/out/target/product/${OUT_DEVICE}/system/bin/
+cp ./out/target/product/${OUT_DEVICE}/system/bin/mini* $fold/out/target/product/${OUT_DEVICE}/system/bin/
 cp ./out/target/product/${OUT_DEVICE}/system/bin/minisfservice $fold/out/target/product/${OUT_DEVICE}/system/bin/
+
+if grep -qE 'MINIMEDIA_AUDIOPOLICYSERVICE_ENABLE.*=.*1' external/droidmedia/env.mk ; then
+    cp ./out/target/product/${OUT_DEVICE}/system/bin/miniaudiopolicy $fold/out/target/product/${OUT_DEVICE}/system/bin/
+fi
 
 tar -cjvf $fold.tgz -C $(dirname $fold) $pkg
 

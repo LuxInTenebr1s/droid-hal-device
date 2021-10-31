@@ -78,7 +78,18 @@ cp out/target/product/@DEVICE@/system/bin/minimediaservice \
     $RPM_BUILD_ROOT/%{_libexecdir}/droid-hybris/system/bin/
 
 cp out/target/product/@DEVICE@/system/bin/minisfservice \
-    $RPM_BUILD_ROOT/%{_libexecdir}/droid-hybris/system/bin/
+   $RPM_BUILD_ROOT/%{_libexecdir}/droid-hybris/system/bin/
+
+
+cp external/droidmedia/init/*.rc \
+   $RPM_BUILD_ROOT/%{_libexecdir}/droid-hybris/system/etc/init/
+
+if [ -e out/target/product/@DEVICE@/system/bin/miniaudiopolicy ] ; then
+    cp out/target/product/@DEVICE@/system/bin/miniaudiopolicy \
+       $RPM_BUILD_ROOT/%{_libexecdir}/droid-hybris/system/bin/
+else
+    rm $RPM_BUILD_ROOT/%{_libexecdir}/droid-hybris/system/etc/init/miniaudiopolicy.rc
+fi
 
 %if %{with droidmedia_devel}
 cp external/droidmedia/*.h $RPM_BUILD_ROOT/%{_includedir}/droidmedia/
@@ -93,8 +104,8 @@ echo %{_libexecdir}/droid-hybris/system/$DROIDLIB/libminisf.so >> ${LIBDMSOLOC}
 
 %files -f file.list
 %defattr(-,root,root,-)
-%{_libexecdir}/droid-hybris/system/bin/minimediaservice
-%{_libexecdir}/droid-hybris/system/bin/minisfservice
+%{_libexecdir}/droid-hybris/system/bin/mini*
+%{_libexecdir}/droid-hybris/system/etc/init/*.rc
 
 %if %{with droidmedia_devel}
 %files devel
